@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ka">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0907">
+  <meta name="description" content="შეარჩიეთ ფილმი, სეანსი და ადგილი MALIBA Cinema Team-ში.">
+  <title>MALIBA Cinema Team — ფილმები და დაჯავშნა</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;500;600;700&family=Noto+Serif+Georgian:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/logo.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/booking.js" defer></script>
+</head>
+<body class="main-page">
+  <header class="topbar">
+    <a class="topbar-brand logo-frame" href="index.html" aria-label="MALIBA — საწყისი გვერდი">
+      <img src="images/logo.png" alt="MALIBA Cinema Team" class="logo">
+      <span class="logo-fallback" aria-hidden="true">
+        <span class="logo-fallback-main">MALIBA</span>
+        <span class="logo-fallback-sub">CINEMA TEAM</span>
+      </span>
+    </a>
+    <button class="button button-outline" id="schedule-open" type="button">განრიგი</button>
+  </header>
+
+  <main class="main-content">
+    <nav class="movie-navigation" id="catalog-navigation" aria-label="ფილმების სარჩევი"></nav>
+
+    <section class="content-section" id="films" aria-labelledby="films-heading">
+      <div class="section-heading">
+        <p class="eyebrow">დიდი ეკრანის ისტორიები</p>
+        <h1 id="films-heading">ფილმები</h1>
+      </div>
+      <div class="movie-grid" id="movie-grid"></div>
+    </section>
+
+    <section class="vip-section" id="vip-rooms" aria-labelledby="vip-heading">
+      <div class="vip-copy">
+        <p class="eyebrow">განსაკუთრებული საღამოსთვის</p>
+        <h2 id="vip-heading">VIP ოთახები</h2>
+        <p>
+          ისიამოვნეთ ფილმით პირად, მყუდრო სივრცეში. აირჩიეთ თქვენთვის
+          სასურველი ოთახი და დრო — თითოეული ოთახი განსხვავებული რაოდენობის
+          სტუმარს იტევს.
+        </p>
+      </div>
+      <div class="vip-action">
+        <p class="vip-price">20 <span>ლარი</span></p>
+        <button class="button button-primary" id="vip-open" type="button">VIP ოთახის დაჯავშნა</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>MALIBA Cinema Team — ყოველდღე 10:00–23:00</p>
+  </footer>
+
+  <dialog class="modal" id="schedule-dialog" aria-labelledby="schedule-title">
+    <div class="modal-panel">
+      <div class="modal-heading">
+        <div>
+          <p class="eyebrow">დაგეგმეთ თქვენი კინო-საღამო</p>
+          <h2 id="schedule-title">სეანსების განრიგი</h2>
+        </div>
+        <button class="icon-button" type="button" data-close-dialog aria-label="ფანჯრის დახურვა">×</button>
+      </div>
+      <div class="table-scroll">
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th scope="col">თარიღი</th>
+              <th scope="col">ფილმი</th>
+              <th scope="col">საათები</th>
+            </tr>
+          </thead>
+          <tbody id="schedule-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="modal" id="ticket-dialog" aria-labelledby="ticket-title">
+    <div class="modal-panel">
+      <div class="modal-heading">
+        <div>
+          <p class="eyebrow">თქვენი კინო-საღამო</p>
+          <h2 id="ticket-title">ბილეთის დაჯავშნა</h2>
+        </div>
+        <button class="icon-button" type="button" data-close-dialog aria-label="ფანჯრის დახურვა">×</button>
+      </div>
+      <div class="booking-content" id="ticket-content">
+        <div class="ticket-movie-summary" id="ticket-movie"></div>
+        <p class="booking-price">ერთი ბილეთი — <strong id="ticket-unit-price"></strong></p>
+        <section class="choice-section" aria-labelledby="session-heading">
+          <h3 id="session-heading">აირჩიეთ სეანსი</h3>
+          <div class="choice-list" id="ticket-sessions"></div>
+        </section>
+        <section class="choice-section" aria-labelledby="seats-heading">
+          <h3 id="seats-heading">აირჩიეთ ადგილები</h3>
+          <div class="seat-legend" aria-label="ადგილების ფერები">
+            <span><i class="legend-dot legend-free"></i>თავისუფალი</span>
+            <span><i class="legend-dot legend-selected"></i>არჩეული</span>
+            <span><i class="legend-dot legend-taken"></i>დაკავებული</span>
+          </div>
+          <div class="screen-label">ეკრანი</div>
+          <div class="seat-grid" id="seat-grid" aria-label="ადგილების სქემა"></div>
+        </section>
+        <div class="booking-summary">
+          <p>არჩეული ადგილები: <span id="selected-seats">ადგილი ჯერ არ არის არჩეული</span></p>
+          <p>ჯამური ფასი: <strong id="ticket-total">0 ლარი</strong></p>
+        </div>
+        <p class="form-message" id="ticket-message" role="status" aria-live="polite"></p>
+        <div class="modal-actions">
+          <button class="button button-secondary" type="button" data-close-dialog>გაუქმება</button>
+          <button class="button button-primary" id="ticket-submit" type="button">დაჯავშნა</button>
+        </div>
+      </div>
+      <section class="confirmation-panel" id="ticket-confirmation" hidden aria-live="polite">
+        <p class="eyebrow">დაჯავშნა დასრულებულია</p>
+        <h3>თქვენი ბილეთები მზად არის</h3>
+        <div id="ticket-confirmation-details"></div>
+        <button class="button button-primary" type="button" data-close-dialog>დასრულება</button>
+      </section>
+    </div>
+  </dialog>
+
+  <dialog class="modal" id="vip-dialog" aria-labelledby="vip-title">
+    <div class="modal-panel">
+      <div class="modal-heading">
+        <div>
+          <p class="eyebrow">პირადი სივრცე თქვენი საღამოსთვის</p>
+          <h2 id="vip-title">VIP ოთახის დაჯავშნა</h2>
+        </div>
+        <button class="icon-button" type="button" data-close-dialog aria-label="ფანჯრის დახურვა">×</button>
+      </div>
+      <div class="booking-content" id="vip-content">
+        <p class="booking-price">ფიქსირებული ფასი — <strong id="vip-price"></strong></p>
+        <section class="choice-section" aria-labelledby="room-heading">
+          <h3 id="room-heading">აირჩიეთ ოთახი</h3>
+          <div class="choice-list choice-list-stacked" id="vip-rooms-list"></div>
+        </section>
+        <section class="choice-section" aria-labelledby="vip-time-heading">
+          <h3 id="vip-time-heading">აირჩიეთ დრო</h3>
+          <div class="choice-list" id="vip-times"></div>
+        </section>
+        <p class="form-message" id="vip-message" role="status" aria-live="polite"></p>
+        <div class="modal-actions">
+          <button class="button button-secondary" type="button" data-close-dialog>გაუქმება</button>
+          <button class="button button-primary" id="vip-submit" type="button">დაჯავშნა</button>
+        </div>
+      </div>
+      <section class="confirmation-panel" id="vip-confirmation" hidden aria-live="polite">
+        <p class="eyebrow">დაჯავშნა დასრულებულია</p>
+        <h3>VIP ოთახი თქვენთვისაა</h3>
+        <div id="vip-confirmation-details"></div>
+        <button class="button button-primary" type="button" data-close-dialog>დასრულება</button>
+      </section>
+    </div>
+  </dialog>
+</body>
+</html>
